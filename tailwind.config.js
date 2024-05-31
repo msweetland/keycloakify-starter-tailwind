@@ -8,6 +8,7 @@ export default {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('tailwind-scrollbar'),
     require('daisyui')
   ],
 }

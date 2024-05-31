@@ -1,10 +1,13 @@
 // Copy pasted from: https://github.com/InseeFrLab/keycloakify/blob/main/src/login/Template.tsx
 
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect} from "react";
 import {usePrepareTemplate} from "keycloakify/lib/usePrepareTemplate";
 import {type TemplateProps} from "keycloakify/login/TemplateProps";
 import type {KcContext} from "./kcContext";
 import type {I18n} from "./i18n";
+import Dropdown from "../components/Dropdown.tsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEarthAmericas} from '@fortawesome/free-solid-svg-icons';
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
   const {
@@ -19,8 +22,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
   const {msg, msgStr, changeLocale, labelBySupportedLanguageTag, currentLanguageTag} = i18n;
   const {realm, locale, auth, url, message, isAppInitiatedAction} = kcContext;
-
-  const [selectedLocale, setSelectedLocale] = useState<string>(currentLanguageTag);
 
   const {isReady} = usePrepareTemplate({
     "doFetchDefaultThemeResources": doUseDefaultCss,
@@ -37,36 +38,32 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
   if (!isReady) return null;
 
-  const handleLocaleSelectionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = event.target.value;
-    setSelectedLocale(newLocale);
-    changeLocale(newLocale)
-  };
-
   return (
-    <div className="card bg-neutral text-neutral-content w-full max-w-lg mx-auto my-5 sm:my-10 md:my-20">
+    <div className="card bg-neutral text-neutral-content w-full max-w-lg mx-auto my-5 sm:my-10 md:my-20 relative">
 
+      {/* Locale Dropdown */}
+      {realm.internationalizationEnabled && locale && locale?.supported.length > 1 && (
+        <Dropdown
+          defaultSelectedItem={currentLanguageTag}
+          onSelect={changeLocale}
+          items={locale.supported.map(({languageTag}) => languageTag)}
+          itemTransformer={(languageTag) => labelBySupportedLanguageTag[languageTag]}
+          buttonIconLeft={<FontAwesomeIcon icon={faEarthAmericas}/>}
+          buttonClassName="btn-ghost btn-sm"
+          dropdownClassName="absolute top-1 right-1 dropdown-bottom dropdown-end"
+          itemButtonClassName="btn-sm"
+          dropdownBodyClassName="shadow-lg"
+        />
+      )}
 
+      <div className="card-body w-full flex flex-col space-y-8">
 
-      {/*select select-ghost select-sm bg-transparent outline-none border-none focus:outline-none focus:border-none*/}
-
-      <div className="card-body w-full flex flex-col space-y-8 relative">
-
+        {/* Realm Name */}
         <div className="w-full flex flex-col items-center justify-center prose max-w-none">
           <img src={`${import.meta.env.BASE_URL}keycloakify-logo.png`} alt="Keycloakify logo" width={50}
                className="mb-4"/>
           <h1>{msgStr("loginTitleHtml", realm.displayName)}</h1>
         </div>
-
-        {realm.internationalizationEnabled && locale && locale?.supported.length > 1 && (
-          <div className="absolute top-0 right-8">
-            <select className="btn btn-sm btn-ghost px-0" value={selectedLocale} onChange={handleLocaleSelectionChange}>
-              {locale.supported.map(({languageTag}) => (
-                <option value={languageTag} key={languageTag}>{labelBySupportedLanguageTag[languageTag]}</option>
-              ))}
-            </select>
-          </div>
-        )}
 
 
 
@@ -148,36 +145,36 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
         {children}
 
-        {auth?.showTryAnotherWayLink && showAnotherWayIfPresent && (
-          <form
-            id="kc-select-try-another-way-form"
-            action={url.loginAction}
-            method="post"
-            // className={clsx(displayWide && getClassName("kcContentWrapperClass"))}
-          >
-            <div
-              // className={clsx(
-              //   displayWide && [getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass")]
-              // )}
-            >
-              <div
-                // className={getClassName("kcFormGroupClass")}
-              >
-                <input type="hidden" name="tryAnotherWay" value="on"/>
-                <a
-                  href="#"
-                  id="try-another-way"
-                  onClick={() => {
-                    document.forms["kc-select-try-another-way-form" as never].submit();
-                    return false;
-                  }}
-                >
-                  {msg("doTryAnotherWay")}
-                </a>
-              </div>
-            </div>
-          </form>
-        )}
+        {/*{auth?.showTryAnotherWayLink && showAnotherWayIfPresent && (*/}
+        {/*  <form*/}
+        {/*    id="kc-select-try-another-way-form"*/}
+        {/*    action={url.loginAction}*/}
+        {/*    method="post"*/}
+        {/*    // className={clsx(displayWide && getClassName("kcContentWrapperClass"))}*/}
+        {/*  >*/}
+        {/*    <div*/}
+        {/*      // className={clsx(*/}
+        {/*      //   displayWide && [getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass")]*/}
+        {/*      // )}*/}
+        {/*    >*/}
+        {/*      <div*/}
+        {/*        // className={getClassName("kcFormGroupClass")}*/}
+        {/*      >*/}
+        {/*        <input type="hidden" name="tryAnotherWay" value="on"/>*/}
+        {/*        <a*/}
+        {/*          href="#"*/}
+        {/*          id="try-another-way"*/}
+        {/*          onClick={() => {*/}
+        {/*            document.forms["kc-select-try-another-way-form" as never].submit();*/}
+        {/*            return false;*/}
+        {/*          }}*/}
+        {/*        >*/}
+        {/*          {msg("doTryAnotherWay")}*/}
+        {/*        </a>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*  </form>*/}
+        {/*)}*/}
 
       </div>
     </div>

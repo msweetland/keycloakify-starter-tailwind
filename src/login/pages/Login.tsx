@@ -2,7 +2,6 @@ import {ChangeEvent, type FormEventHandler, useState} from "react";
 import {clsx} from "keycloakify/tools/clsx";
 import {useConstCallback} from "keycloakify/tools/useConstCallback";
 import type {PageProps} from "keycloakify/login/pages/PageProps";
-import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../kcContext";
 import type {I18n} from "../i18n";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -86,7 +85,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                   {getUsernameLabel() == "email" ? <FontAwesomeIcon icon={faEnvelope}/> : <FontAwesomeIcon icon={faUser}/>}
                   <input
                     className="grow w-full"
-                    tabIndex={1}
                     name={getAutoCompleteHelper(getUsernameLabel())}
                     defaultValue={login.username ?? ""}
                     type="text"
