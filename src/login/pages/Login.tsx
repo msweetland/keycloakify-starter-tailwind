@@ -1,11 +1,12 @@
 import {ChangeEvent, type FormEventHandler, useState} from "react";
-import {clsx} from "keycloakify/tools/clsx";
 import {useConstCallback} from "keycloakify/tools/useConstCallback";
 import type {PageProps} from "keycloakify/login/pages/PageProps";
 import type {KcContext} from "../kcContext";
 import type {I18n} from "../i18n";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faKey, faUser} from "@fortawesome/free-solid-svg-icons";
+import SocialLoginButton from "../../components/SocialLoginButton.tsx";
+import {getSocialProviderConfig} from "../socialProviderConfig.ts";
 
 const my_custom_param = new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -68,7 +69,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
       headerNode={<></>}
     >
       <div>
-        {/*<h1 id="kc-page-title">{msgStr("doLogIn")}</h1>*/}
         {realm.password && (
           <form
             className="flex flex-col space-y-4"
@@ -161,22 +161,17 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
           </form>
         )}
 
-
-        {
-          realm.password && social.providers && (
+        {social.providers && (
             <>
-              <div className="divider">OR</div>
-              <div>
-                <ul>
-                  {social.providers.map(p => (
-                    <li key={p.providerId}>
-                      <a href={p.loginUrl} id={`zocial-${p.alias}`} className={clsx("zocial", p.providerId)}>
-                        <span>{p.displayName}</span>
-                      </a>
+              {realm.password && <div className="divider">{msgStr("identity-provider-login-label")}</div>}
+              <ul className="flex flex-col space-y-4">
+                {social.providers.map(getSocialProviderConfig).map(
+                  socialProviderConfig =>
+                    <li key={socialProviderConfig.providerId}>
+                      <SocialLoginButton {...socialProviderConfig} />
                     </li>
-                  ))}
-                </ul>
-              </div>
+                )}
+              </ul>
             </>
           )
         }

@@ -7,12 +7,13 @@ import type {KcContext} from "./kcContext";
 import type {I18n} from "./i18n";
 import Dropdown from "../components/Dropdown.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEarthAmericas} from '@fortawesome/free-solid-svg-icons';
+import {faTriangleExclamation, faEarthAmericas} from '@fortawesome/free-solid-svg-icons';
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
   const {
-    // displayRequiredFields = false,
+    displayMessage = true,
     showAnotherWayIfPresent = true,
+    displayRequiredFields,
     // showUsernameNode = null,
     kcContext,
     i18n,
@@ -58,93 +59,49 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
       <div className="card-body w-full flex flex-col space-y-8">
 
-        {/* Realm Name */}
+        {/* Realm Name and Icon */}
         <div className="w-full flex flex-col items-center justify-center prose max-w-none">
-          <img src={`${import.meta.env.BASE_URL}keycloakify-logo.png`} alt="Keycloakify logo" width={50}
-               className="mb-4"/>
+          <img className="mb-4" src={`${import.meta.env.BASE_URL}keycloakify-logo.png`} alt="Keycloakify logo" width={50}/>
           <h1>{msgStr("loginTitleHtml", realm.displayName)}</h1>
         </div>
 
 
+        {/* Required Fields notification */}
+        {displayRequiredFields && (
+          <div role="alert" className="alert alert-error">
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <span>{msgStr("requiredFields")}</span>
+          </div>
+        )}
 
-
-
-
-
-        {/*{!(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (*/}
-        {/*  displayRequiredFields ? (*/}
-        {/*    <div className={getClassName("kcContentWrapperClass")}>*/}
-        {/*      <div className={clsx(getClassName("kcLabelWrapperClass"), "subtitle")}>*/}
-        {/*                  <span className="subtitle">*/}
-        {/*                      <span className="required">*</span>*/}
-        {/*                    {msg("requiredFields")}*/}
-        {/*                  </span>*/}
-        {/*      </div>*/}
-        {/*      <div className="col-md-10">*/}
-        {/*        <h1 id="kc-page-title">{headerNode}</h1>*/}
-        {/*      </div>*/}
+        {/* Restart Login TODO */}
+        {/*<div id="kc-username">*/}
+        {/*  <label id="kc-attempted-username">{auth?.attemptedUsername}</label>*/}
+        {/*  <a id="reset-login" href={url.loginRestartFlowUrl}>*/}
+        {/*    <div className="kc-login-tooltip">*/}
+        {/*      <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>*/}
         {/*    </div>*/}
-        {/*  ) : (*/}
-        {/*    <h1 id="kc-page-title">{headerNode}</h1>*/}
-        {/*  )*/}
-        {/*) : displayRequiredFields ? (*/}
-        {/*  <div className={getClassName("kcContentWrapperClass")}>*/}
-        {/*    <div className={clsx(getClassName("kcLabelWrapperClass"), "subtitle")}>*/}
-        {/*              <span className="subtitle">*/}
-        {/*                  <span className="required">*</span> {msg("requiredFields")}*/}
-        {/*              </span>*/}
-        {/*    </div>*/}
-        {/*    <div className="col-md-10">*/}
-        {/*      {showUsernameNode}*/}
-        {/*      <div className={getClassName("kcFormGroupClass")}>*/}
-        {/*        <div id="kc-username">*/}
-        {/*          <label id="kc-attempted-username">{auth?.attemptedUsername}</label>*/}
-        {/*          <a id="reset-login" href={url.loginRestartFlowUrl}>*/}
-        {/*            <div className="kc-login-tooltip">*/}
-        {/*              <i className={getClassName("kcResetFlowIcon")}></i>*/}
-        {/*              <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>*/}
-        {/*            </div>*/}
-        {/*          </a>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*) : (*/}
-        {/*  <>*/}
-        {/*    {showUsernameNode}*/}
-        {/*    <div className={getClassName("kcFormGroupClass")}>*/}
-        {/*      <div id="kc-username">*/}
-        {/*        <label id="kc-attempted-username">{auth?.attemptedUsername}</label>*/}
-        {/*        <a id="reset-login" href={url.loginRestartFlowUrl}>*/}
-        {/*          <div className="kc-login-tooltip">*/}
-        {/*            <i className={getClassName("kcResetFlowIcon")}></i>*/}
-        {/*            <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>*/}
-        {/*          </div>*/}
-        {/*        </a>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </>*/}
-        {/*)}*/}
+        {/*  </a>*/}
+        {/*</div>*/}
 
-        {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-        {/*{displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (*/}
-        {/*  <div className={clsx("alert", `alert-${message.type}`)}>*/}
-        {/*    {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}*/}
-        {/*    {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}*/}
-        {/*    {message.type === "error" && <span className={getClassName("kcFeedbackErrorIcon")}></span>}*/}
-        {/*    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>}*/}
-        {/*    <span*/}
-        {/*      className="kc-feedback-text"*/}
-        {/*      dangerouslySetInnerHTML={{*/}
-        {/*        "__html": message.summary*/}
-        {/*      }}*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*)}*/}
+        {/* Display Message TODO */}
+        {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+          <div role="alert" className={
+            `alert 
+            ${message.type === "success" ? "alert-success" : ""} 
+            ${message.type === "warning" ? "alert-warning" : ""} 
+            ${message.type === "error" ? "alert-error" : ""} 
+            ${message.type === "info" ? "alert-info" : ""}
+            `}>
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <span>{message.summary}</span>
+          </div>
+        )}
 
-
+        {/* Specific Page */}
         {children}
 
+        {/* Try Another Way TODO */}
         {/*{auth?.showTryAnotherWayLink && showAnotherWayIfPresent && (*/}
         {/*  <form*/}
         {/*    id="kc-select-try-another-way-form"*/}
