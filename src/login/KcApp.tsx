@@ -4,6 +4,9 @@ import Fallback from "keycloakify/login";
 import type {KcContext} from "./kcContext";
 import {useI18n} from "./i18n";
 import Template from "./Template";
+import LoginResetPassword from "./pages/LoginResetPassword.tsx";
+import LoginPassword from "./pages/LoginPassword.tsx";
+import Error from "./pages/Error.tsx";
 
 const Login = lazy(() => import("./pages/Login"));
 // If you can, favor register-user-profile.ftl over register.ftl, see: https://docs.keycloakify.dev/realtime-input-validation
@@ -24,7 +27,11 @@ export default function KcApp(props: { kcContext: KcContext; }) {
         <Suspense>
             {(() => {
                 switch (kcContext.pageId) {
+                    case "error.ftl": return <Error {...{ kcContext, i18n, Template }} doUseDefaultCss={false} />;
                     case "login.ftl": return <Login {...{ kcContext, i18n, Template }} doUseDefaultCss={false} />;
+                    case "login-password.ftl": return <LoginPassword {...{ kcContext, i18n, Template }} doUseDefaultCss={false}/>
+                    case "login-reset-password.ftl": return <LoginResetPassword {...{ kcContext, i18n, Template }} doUseDefaultCss={false}/>
+
                     case "register.ftl": return <Register {...{ kcContext, i18n, Template }} doUseDefaultCss={false} />;
                     case "register-user-profile.ftl": return <RegisterUserProfile {...{ kcContext, i18n, Template }} doUseDefaultCss={false} />
                     case "terms.ftl": return <Terms {...{ kcContext, i18n, Template }} doUseDefaultCss={false} />;

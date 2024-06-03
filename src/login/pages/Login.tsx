@@ -8,24 +8,12 @@ import {faEnvelope, faKey, faUser} from "@fortawesome/free-solid-svg-icons";
 import SocialLoginButton from "../../components/SocialLoginButton.tsx";
 import {getSocialProviderConfig} from "../socialProviderConfig.ts";
 
-const my_custom_param = new URL(window.location.href).searchParams.get("my_custom_param");
-
-if (my_custom_param !== null) {
-  console.log("my_custom_param:", my_custom_param);
-}
-
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
   const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
-
-  console.log(kcContext);
-
-
   const {social, realm, url, usernameHidden, login, auth, registrationDisabled} = kcContext;
-
   const {msg, msgStr} = i18n;
 
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
-
   const [shouldRememberPassword, setShouldRememberPassword] = useState<boolean>(login.rememberMe === "on" || false);
 
   const handleRememberPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,18 +22,11 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
   };
 
 
-
   const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
     e.preventDefault();
-
     setIsLoginButtonDisabled(true);
-
     const formElement = e.target as HTMLFormElement;
-
-    //NOTE: Even if we login with email Keycloak expect username and password in
-    //the POST request.
     formElement.querySelector("input[name='email']")?.setAttribute("name", "username");
-
     formElement.submit();
   });
 
@@ -69,9 +50,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
       headerNode={<></>}
     >
       <div>
+
+        {/* Password Login */}
         {realm.password && (
           <form
-            className="flex flex-col space-y-4"
             onSubmit={onSubmit}
             action={url.loginAction}
             method="post"
@@ -96,7 +78,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             )}
 
             {/* Password Input*/}
-            <label className="form-control w-full">
+            <label className="form-control w-full mt-2">
               <div className="label">
                 <span className="label-text">{msgStr("password")}</span>
               </div>
@@ -127,15 +109,16 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             />
 
             <input
-              className="btn btn-primary w-full"
+              className={`btn btn-primary w-full ${realm.resetPasswordAllowed ? "mt-4" : "mt-10"}`}
               name="login"
               type="submit"
               value={msgStr("doLogIn")}
               disabled={isLoginButtonDisabled}
             />
 
-            {realm.rememberMe && !usernameHidden && (
-              <div className="form-control">
+            {/* Remember Me */}
+            {(realm.rememberMe && !usernameHidden) && (
+              <div className="form-control mt-4">
                 <label className="label cursor-pointer justify-start space-x-2">
                   <input
                     id="rememberMe"
@@ -149,21 +132,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                 </label>
               </div>
             )}
-
-            {/* Registration Link*/}
-            {realm.registrationAllowed && !registrationDisabled && (
-              <div>
-                <div className="divider">{msgStr("noAccount")}</div>
-                <a className="btn neutral w-full" href={url.registrationUrl}> {msgStr("doRegister")}</a>
-              </div>
-            )}
-
           </form>
         )}
 
+        {/* Social Login */}
         {social.providers && (
-            <>
-              {realm.password && <div className="divider">{msgStr("identity-provider-login-label")}</div>}
+            <div>
+              <div className="divider my-8">{msgStr("identity-provider-login-label")}</div>
               <ul className="flex flex-col space-y-4">
                 {social.providers.map(getSocialProviderConfig).map(
                   socialProviderConfig =>
@@ -172,11 +147,19 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                     </li>
                 )}
               </ul>
-            </>
+            </div>
           )
         }
+
+        {/* Registration Link */}
+        {realm.password && realm.registrationAllowed && !registrationDisabled && (
+          <div>
+            <div className="divider my-8">{msgStr("noAccount")}</div>
+            <a className="btn neutral w-full" href={url.registrationUrl}> {msgStr("doRegister")}</a>
+          </div>
+        )}
+
       </div>
     </Template>
-  )
-    ;
+  );
 }

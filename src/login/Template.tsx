@@ -7,30 +7,27 @@ import type {KcContext} from "./kcContext";
 import type {I18n} from "./i18n";
 import Dropdown from "../components/Dropdown.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTriangleExclamation, faEarthAmericas} from '@fortawesome/free-solid-svg-icons';
+import {faEarthAmericas, faExclamation, faTriangleExclamation} from '@fortawesome/free-solid-svg-icons';
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
   const {
     displayMessage = true,
-    showAnotherWayIfPresent = true,
     displayRequiredFields,
-    // showUsernameNode = null,
     kcContext,
     i18n,
-    doUseDefaultCss,
     children
   } = props;
 
-  const {msg, msgStr, changeLocale, labelBySupportedLanguageTag, currentLanguageTag} = i18n;
-  const {realm, locale, auth, url, message, isAppInitiatedAction} = kcContext;
+  const {msgStr, changeLocale, labelBySupportedLanguageTag, currentLanguageTag} = i18n;
+  const {realm, locale, message, isAppInitiatedAction} = kcContext;
 
   const {isReady} = usePrepareTemplate({
-    "doFetchDefaultThemeResources": doUseDefaultCss,
+    "doFetchDefaultThemeResources": false,
     "styles": [],
     "htmlClassName": undefined,
-    "bodyClassName": "bg-base-100 flex items-center justify-center min-h-screen",
+    "bodyClassName": "bg-base-100 w-full min-h-screen w-full flex items-center justify-center",
     "htmlLangProperty": locale?.currentLanguageTag,
-    "documentTitle": msgStr("loginTitle", kcContext.realm.displayName)
+    "documentTitle": msgStr("loginTitle", kcContext.realm.displayName),
   });
 
   useEffect(() => {
@@ -93,7 +90,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             ${message.type === "error" ? "alert-error" : ""} 
             ${message.type === "info" ? "alert-info" : ""}
             `}>
-            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <FontAwesomeIcon icon={faExclamation} />
             <span>{message.summary}</span>
           </div>
         )}

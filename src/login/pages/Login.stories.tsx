@@ -43,7 +43,7 @@ export const WithoutPasswordReset: Story = {
 };
 
 export const WithEmailAsUsername: Story = {
-  render: () => <PageStory kcContext={{realm: {loginWithEmailAllowed: false}}}/>,
+  render: () => <PageStory kcContext={{realm: {loginWithEmailAllowed: true}}}/>,
 };
 
 export const WithPresetUsername: Story = {
@@ -59,7 +59,7 @@ export const WithImmutablePresetUsername: Story = {
           showUsername: true,
         },
         usernameHidden: true,
-        message: {type: "info", summary: "Please re-authenticate to continue"},
+        message: {type: "warning", summary: "Please re-authenticate to continue"},
       }}
     />
   ),
