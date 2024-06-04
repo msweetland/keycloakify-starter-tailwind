@@ -4,7 +4,7 @@ import Fallback from "keycloakify/login";
 import type {KcContext} from "./kcContext";
 import {useI18n} from "./i18n";
 import Template from "./Template";
-import { HSStaticMethods } from "preline";
+import {HSStaticMethods} from "preline";
 
 HSStaticMethods.autoInit();
 
@@ -14,6 +14,7 @@ const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired"));
 const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm"));
 const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail"));
+const LoginDeviceVerifyUserCode = lazy(() => import("./pages/LoginDeviceVerifyUserCode"));
 const Error = lazy(() => import("./pages/Error"));
 const SamlPostForm = lazy(() => import("./pages/SamlPostForm"));
 // If you can, favor register-user-profile.ftl over register.ftl, see: https://docs.keycloakify.dev/realtime-input-validation
@@ -48,6 +49,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <LoginIdpLinkConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "login-idp-link-email.ftl":
             return <LoginIdpLinkEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+          case "login-oauth2-device-verify-user-code.ftl":
+            return <LoginDeviceVerifyUserCode {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "saml-post-form.ftl":
             return <SamlPostForm {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "register.ftl":
