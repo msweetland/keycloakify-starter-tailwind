@@ -105,7 +105,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         onClick={toggleDropdown}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        className={`py-2 px-3 flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white hover:bg-gray-100 hover:text-gray-800 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-white/10 dark:hover:text-white ${buttonClassName} focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white`}
+        className={`py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 ${buttonClassName} focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white`}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
       >
@@ -114,7 +114,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
       </button>
       <div className={`flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 z-[1] menu mr-1 mt-1 bg-base-100 rounded-box w-52 p-2 max-h-80 ${dropdownBodyClassName} ${isOpen ? "" : "hidden"}`}>
-        <div className="overflow-y-scroll scrollbar scrollbar-track-rounded-full dark:scrollbar-track-neutral-900 dark:scrollbar-thumb-gray-200 pr-2">
+        <div className="overflow-y-scroll scrollbar scrollbar-track-rounded-full scrollbar-track-white scrollbar-thumb-gray-800 dark:scrollbar-track-neutral-900 dark:scrollbar-thumb-gray-200 pr-4">
           <ul role="menu" aria-label="Dropdown list" className="flex flex-col space-y-1">
             {items.map((item, index) => (
               <li key={index} role="menuitem">
@@ -124,7 +124,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   onMouseMove={() => setHighlightedIndex(index)}
                   onFocus={(_) => setHighlightedIndex(index)}
                   onBlur={handleBlur}
-                  className={`w-full flex justify-between py-2 px-3 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white ${
+                  className={`w-full justify-between py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 disabled:opacity-50 disabled:pointer-events-none dark:text-white focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white ${
                     highlightedIndex === index ? 'bg-gray-100 text-gray-800 hover:bg-gray-100 hover:text-gray-800 dark:bg-white/10 dark:hover:bg-white/10 dark:text-white dark:hover:text-white' : ''
                   } ${itemButtonClassName}`} // Added padding-right
                   onMouseDown={e => e.preventDefault()}
