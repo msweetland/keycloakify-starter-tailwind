@@ -15,6 +15,7 @@ const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired"));
 const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm"));
 const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail"));
 const LoginDeviceVerifyUserCode = lazy(() => import("./pages/LoginDeviceVerifyUserCode"));
+const LogoutConfirm = lazy(() => import("./pages/LogoutConfirm"));
 const Error = lazy(() => import("./pages/Error"));
 const SamlPostForm = lazy(() => import("./pages/SamlPostForm"));
 // If you can, favor register-user-profile.ftl over register.ftl, see: https://docs.keycloakify.dev/realtime-input-validation
@@ -51,6 +52,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <LoginIdpLinkEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "login-oauth2-device-verify-user-code.ftl":
             return <LoginDeviceVerifyUserCode {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+          case "logout-confirm.ftl":
+            return <LogoutConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "saml-post-form.ftl":
             return <SamlPostForm {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "register.ftl":

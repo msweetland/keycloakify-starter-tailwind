@@ -41,7 +41,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
 
   return (
     <Template {...{kcContext, i18n, doUseDefaultCss, classes}} displayMessage={false} headerNode={msg("termsTitle")}>
-      <div className="prose max-w-none">
+      <div className="prose dark:prose-invert max-w-none">
         <Markdown>{termMarkdown}</Markdown>
       </div>
       <form className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4"
