@@ -13,7 +13,7 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, {
     <Template {...{kcContext, i18n, doUseDefaultCss, classes}} displayMessage={false} headerNode={<></>}>
       <div className="flex flex-col space-y-4">
         <div
-          className="text-center mt-2 bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+          className="text-center bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
           role="alert"
         >
           <span className="font-bold">{msgStr("pageExpiredTitle")}</span>
