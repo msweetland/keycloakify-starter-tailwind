@@ -2,7 +2,7 @@ import { FC } from "react";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
-import {isLoginContext, isLoginPasswordContext} from "../utils/ContextGuards.ts";
+import {isLoginContext, isLoginPasswordContext, isLoginResetPasswordContext} from "../utils/ContextGuards.ts";
 
 interface SubmitButtonProps extends PageProps<Extract<KcContext, { pageId:
     "login.ftl" |
@@ -22,6 +22,9 @@ const SubmitButton: FC<SubmitButtonProps> = ({ kcContext, i18n, isSubmitted }) =
       break;
     case isLoginPasswordContext(kcContext):
       message = msgStr("doForgotPassword");
+      break;
+    case isLoginResetPasswordContext(kcContext):
+      message = msgStr("doSubmit");
       break;
   }
 

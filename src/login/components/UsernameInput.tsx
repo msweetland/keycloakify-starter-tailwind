@@ -4,9 +4,24 @@ import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
+import {isLoginContext, isLoginResetPasswordContext} from "../utils/ContextGuards.ts";
 
-interface UsernameInputProps extends PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n> {
+type KcContextSupportedPages = Extract<KcContext, { pageId:
+  "login.ftl" |
+  "login-reset-password.ftl" }>
+
+interface UsernameInputProps extends PageProps<KcContextSupportedPages, I18n> {
   isSubmitted: boolean;
+}
+
+export function getUsernameLabel ({realm}: KcContextSupportedPages) {
+  if (!realm.loginWithEmailAllowed) {
+    return "username";
+  } else if (realm.registrationEmailAsUsername) {
+    return "email";
+  } else {
+    return "usernameOrEmail";
+  }
 }
 
 const UsernameInput: FC<UsernameInputProps> = ({
@@ -14,7 +29,7 @@ const UsernameInput: FC<UsernameInputProps> = ({
                                                  i18n,
                                                  isSubmitted,
                                                }) => {
-  const { realm, login } = kcContext;
+  const { realm } = kcContext;
   const { msg } = i18n;
 
   const getUsernameLabel = () => {
@@ -26,6 +41,13 @@ const UsernameInput: FC<UsernameInputProps> = ({
       return "usernameOrEmail";
     }
   };
+
+  let defaultValue = "";
+  if (isLoginContext(kcContext)) {
+    defaultValue = kcContext.login.username || "";
+  } else if (isLoginResetPasswordContext(kcContext)) {
+    defaultValue = kcContext.auth?.attemptedUsername || "";
+  }
 
   return (
     <div>
@@ -52,7 +74,7 @@ const UsernameInput: FC<UsernameInputProps> = ({
           id="username"
           name="username"
           className="peer py-3 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 dark:focus:border-neutral-600"
-          defaultValue={login.username ?? ""}
+          defaultValue={defaultValue}
           autoFocus={true}
           autoComplete="off"
           disabled={isSubmitted}

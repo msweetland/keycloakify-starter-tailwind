@@ -4,15 +4,15 @@ import Fallback from "keycloakify/login";
 import type {KcContext} from "./kcContext";
 import {useI18n} from "./i18n";
 import Template from "./Template";
-import LoginResetPassword from "./pages/LoginResetPassword.tsx";
-import LoginPassword from "./pages/LoginPassword.tsx";
-import Error from "./pages/Error.tsx";
-
 import { HSStaticMethods } from "preline";
 
 HSStaticMethods.autoInit();
 
 const Login = lazy(() => import("./pages/Login"));
+const LoginPassword = lazy(() => import("./pages/LoginPassword"));
+const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
+const Error = lazy(() => import("./pages/Error"));
+const SamlPostForm = lazy(() => import("./pages/SamlPostForm"));
 // If you can, favor register-user-profile.ftl over register.ftl, see: https://docs.keycloakify.dev/realtime-input-validation
 const Register = lazy(() => import("./pages/Register"));
 const RegisterUserProfile = lazy(() => import("./pages/RegisterUserProfile"));
@@ -39,7 +39,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <LoginPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "login-reset-password.ftl":
             return <LoginResetPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
-
+          case "saml-post-form.ftl":
+            return <SamlPostForm {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "register.ftl":
             return <Register {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "register-user-profile.ftl":

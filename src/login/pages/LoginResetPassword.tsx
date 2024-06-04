@@ -1,36 +1,25 @@
-import { ChangeEvent, useState, type FormEventHandler } from "react";
-import { useConstCallback } from "keycloakify/tools/useConstCallback";
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import type { KcContext } from "../kcContext";
-import type { I18n } from "../i18n";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCaretLeft, faEnvelope, faUser} from "@fortawesome/free-solid-svg-icons";
+import {type FormEventHandler, useState} from "react";
+import {useConstCallback} from "keycloakify/tools/useConstCallback";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import type {KcContext} from "../kcContext";
+import type {I18n} from "../i18n";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCaretLeft} from "@fortawesome/free-solid-svg-icons";
+import UsernameInput, {getUsernameLabel} from "../components/UsernameInput.tsx";
+import SubmitButton from "../components/SubmitButton.tsx";
 
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
   const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-  const { url, realm, auth } = kcContext;
-  const { msg, msgStr } = i18n;
+  const { url} = kcContext;
+  const { msgStr } = i18n;
 
-  const [username, setUsername] = useState(auth?.attemptedUsername || '');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
     e.preventDefault();
+    setIsSubmitted(true);
     (e.target as HTMLFormElement).submit();
   });
-
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-  };
-
-  const getUsernameLabel = () => {
-    if (!realm.loginWithEmailAllowed) {
-      return "username";
-    } else if (realm.registrationEmailAsUsername) {
-      return "email";
-    } else {
-      return "usernameOrEmail";
-    }
-  };
 
   return (
     <Template
@@ -40,9 +29,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
       <div className="w-full max-w-md mx-auto space-y-4">
 
         {/* Header */}
-        <div className="prose">
+        <div className="prose dark:prose-invert">
           <h2 className="mb-2">{msgStr("emailForgotTitle")}</h2>
-          <p>{getUsernameLabel() == "email" ? msgStr("emailInstruction") : msgStr("emailInstructionUsername")}</p>
+          <p>{getUsernameLabel(kcContext) == "email" ? msgStr("emailInstruction") : msgStr("emailInstructionUsername")}</p>
         </div>
 
         {/* Password Reset */}
@@ -52,44 +41,16 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
           method="post"
           onSubmit={onSubmit}
         >
-          {/* Username/Email Input */}
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">{msg(getUsernameLabel())}</span>
-            </div>
-            <label className="input input-bordered flex items-center gap-2 w-full">
-              {getUsernameLabel() == "email" ? <FontAwesomeIcon icon={faEnvelope} /> : <FontAwesomeIcon icon={faUser} />}
-              <input
-                className="grow w-full"
-                name="username"
-                type="text"
-                autoFocus
-                autoComplete="off"
-                value={username}
-                onChange={handleUsernameChange}
-              />
-            </label>
-          </label>
-
-          {/* Submit */}
-          <div className="form-control">
-            <button
-              className="btn btn-primary w-full"
-              type="submit"
-            >
-              {msgStr("doSubmit")}
-            </button>
-          </div>
+          <UsernameInput {...{...props, isSubmitted }}/>
+          <SubmitButton {...{...props, isSubmitted }} />
 
         </form>
 
         {/* Back to Login */}
-        <div className="text-center">
-          <a className="btn btn-ghost flex items-center justify-center gap-2" href={url.loginUrl}>
-            <FontAwesomeIcon icon={faCaretLeft}/>
-            {msgStr("backToLogin").replace("&laquo; ", "")}
-          </a>
-        </div>
+        <a className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700" href={url.loginUrl}>
+          <FontAwesomeIcon icon={faCaretLeft}/>
+          {msgStr("backToLogin").replace("&laquo; ", "")}
+        </a>
       </div>
     </Template>
   );
