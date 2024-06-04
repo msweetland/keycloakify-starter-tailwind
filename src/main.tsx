@@ -2,7 +2,7 @@ import {createRoot} from "react-dom/client";
 import {lazy, StrictMode, Suspense} from "react";
 import {kcContext as kcLoginThemeContext} from "./login/kcContext";
 import {kcContext as kcAccountThemeContext} from "./account/kcContext";
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import "preline";
 
 const KcLoginThemeApp = lazy(() => import("./login/KcApp"));
 const KcAccountThemeApp = lazy(() => import("./account/KcApp"));

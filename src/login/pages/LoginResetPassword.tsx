@@ -15,8 +15,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
 
   const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
     e.preventDefault();
-    const formElement = e.target as HTMLFormElement;
-    formElement.submit();
+    (e.target as HTMLFormElement).submit();
   });
 
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {

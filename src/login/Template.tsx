@@ -7,7 +7,7 @@ import type {KcContext} from "./kcContext";
 import type {I18n} from "./i18n";
 import Dropdown from "../components/Dropdown.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEarthAmericas, faExclamation, faTriangleExclamation} from '@fortawesome/free-solid-svg-icons';
+import {faEarthAmericas, faLock} from '@fortawesome/free-solid-svg-icons';
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
   const {
@@ -24,8 +24,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   const {isReady} = usePrepareTemplate({
     "doFetchDefaultThemeResources": false,
     "styles": [],
-    "htmlClassName": undefined,
-    "bodyClassName": "bg-base-100 w-full min-h-screen w-full flex items-center justify-center",
+    "htmlClassName": "min-h-full",
+    "bodyClassName": "bg-white dark:bg-neutral-900 w-full flex items-center justify-center",
     "htmlLangProperty": locale?.currentLanguageTag,
     "documentTitle": msgStr("loginTitle", kcContext.realm.displayName),
   });
@@ -37,60 +37,47 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   if (!isReady) return null;
 
   return (
-    <div className="card bg-neutral text-neutral-content w-full max-w-lg mx-auto my-5 sm:my-10 md:my-20 relative">
+    <div className="h-full min-h-screen max-w-lg flex flex-col justify-center mx-auto space-y-4">
 
-      {/* Locale Dropdown */}
-      {realm.internationalizationEnabled && locale && locale?.supported.length > 1 && (
-        <Dropdown
-          defaultSelectedItem={currentLanguageTag}
-          onSelect={changeLocale}
-          items={locale.supported.map(({languageTag}) => languageTag)}
-          itemTransformer={(languageTag) => labelBySupportedLanguageTag[languageTag]}
-          buttonIconLeft={<FontAwesomeIcon icon={faEarthAmericas}/>}
-          buttonClassName="btn-ghost btn-sm"
-          dropdownClassName="absolute top-1 right-1 dropdown-bottom dropdown-end"
-          itemButtonClassName="btn-sm"
-          dropdownBodyClassName="shadow-lg"
-        />
-      )}
+      <div className="relative w-full p-4 py-10 flex flex-col space-y-4 bg-white md:border md:shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
 
-      <div className="card-body w-full flex flex-col space-y-8">
+        {/* Locale Dropdown */}
+        {realm.internationalizationEnabled && locale && locale?.supported.length > 1 && (
+          <Dropdown
+            defaultSelectedItem={currentLanguageTag}
+            onSelect={changeLocale}
+            items={locale.supported.map(({languageTag}) => languageTag)}
+            itemTransformer={(languageTag) => labelBySupportedLanguageTag[languageTag]}
+            buttonIconLeft={<FontAwesomeIcon icon={faEarthAmericas}/>}
+            buttonClassName="btn-ghost btn-sm"
+            dropdownClassName="absolute top-4 right-4"
+            itemButtonClassName=""
+            dropdownBodyClassName="origin-top-right absolute right-0 shadow-lg mt-2"
+          />
+        )}
 
-        {/* Realm Name and Icon */}
-        <div className="w-full flex flex-col items-center justify-center prose max-w-none">
-          <img className="mb-4" src={`${import.meta.env.BASE_URL}keycloakify-logo.png`} alt="Keycloakify logo" width={50}/>
+        {/* Icon and Realm Name */}
+        <div className="w-full flex flex-col items-center justify-center max-w-none py-8 space-y-4 text-gray-800 dark:text-neutral-200 prose dark:prose-invert">
+          <FontAwesomeIcon icon={faLock} size={"3x"}/>
           <h1>{msgStr("loginTitleHtml", realm.displayName)}</h1>
         </div>
 
-
         {/* Required Fields notification */}
         {displayRequiredFields && (
-          <div role="alert" className="alert alert-error">
-            <FontAwesomeIcon icon={faTriangleExclamation} />
-            <span>{msgStr("requiredFields")}</span>
+          <div className="bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500" role="alert">
+            {msgStr("requiredFields")}
           </div>
         )}
-
-        {/* Restart Login TODO */}
-        {/*<div id="kc-username">*/}
-        {/*  <label id="kc-attempted-username">{auth?.attemptedUsername}</label>*/}
-        {/*  <a id="reset-login" href={url.loginRestartFlowUrl}>*/}
-        {/*    <div className="kc-login-tooltip">*/}
-        {/*      <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>*/}
-        {/*    </div>*/}
-        {/*  </a>*/}
-        {/*</div>*/}
 
         {/* Display Message TODO */}
         {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
           <div role="alert" className={
             `alert 
-            ${message.type === "success" ? "alert-success" : ""} 
-            ${message.type === "warning" ? "alert-warning" : ""} 
-            ${message.type === "error" ? "alert-error" : ""} 
-            ${message.type === "info" ? "alert-info" : ""}
+            ${message.type === "success" ? "bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" : ""} 
+            ${message.type === "warning" ? "bg-yellow-100 border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4 dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500" : ""} 
+            ${message.type === "error" ? "bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500" : ""} 
+            ${message.type === "info" ? "bg-gray-100 border border-gray-200 text-sm text-gray-800 rounded-lg p-4 dark:bg-white/10 dark:border-white/20 dark:text-white" : ""}
             `}>
-            <FontAwesomeIcon icon={faExclamation} />
             <span>{message.summary}</span>
           </div>
         )}

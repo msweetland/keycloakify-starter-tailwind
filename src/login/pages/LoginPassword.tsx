@@ -1,29 +1,22 @@
-import { ChangeEvent, useState, type FormEventHandler } from "react";
-import { useConstCallback } from "keycloakify/tools/useConstCallback";
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import type { KcContext } from "../kcContext";
-import type { I18n } from "../i18n";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey } from "@fortawesome/free-solid-svg-icons";
+import {type FormEventHandler, useState} from "react";
+import {useConstCallback} from "keycloakify/tools/useConstCallback";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import type {KcContext} from "../kcContext";
+import type {I18n} from "../i18n";
+import PasswordInput from "../components/PasswordInput.tsx";
+import SubmitButton from "../components/SubmitButton.tsx";
 
 export default function LoginPassword(props: PageProps<Extract<KcContext, { pageId: "login-password.ftl" }>, I18n>) {
   const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-  const { realm, url, login } = kcContext;
-  const { msgStr } = i18n;
+  const { url, } = kcContext;
 
-  const [password, setPassword] = useState(login.password || '');
-  const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
     e.preventDefault();
-    setIsLoginButtonDisabled(true);
-    const formElement = e.target as HTMLFormElement;
-    formElement.submit();
+    setIsSubmitted(true);
+    (e.target as HTMLFormElement).submit();
   });
-
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
 
   return (
     <Template
@@ -39,44 +32,8 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
           method="post"
           onSubmit={onSubmit}
         >
-          {/* Password Input */}
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">{msgStr("password")}</span>
-            </div>
-            <label className="input input-bordered flex items-center gap-2 w-full">
-              <FontAwesomeIcon icon={faKey} />
-              <input
-                className="grow w-full"
-                name="password"
-                type="password"
-                autoFocus
-                autoComplete="on"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-            </label>
-
-            {/* Forgot Password link */}
-            {realm.resetPasswordAllowed && (
-              <div className="label">
-                <a className="label-text-alt link link-hover" href={url.loginResetCredentialsUrl}>
-                  {msgStr("doForgotPassword")}
-                </a>
-              </div>
-            )}
-          </label>
-
-          {/* Submit */}
-          <div className="form-control">
-            <button
-              className="btn btn-primary w-full"
-              type="submit"
-              disabled={isLoginButtonDisabled}
-            >
-              {msgStr("doLogIn")}
-            </button>
-          </div>
+          <PasswordInput {...{...props, isSubmitted}}/>
+          <SubmitButton {...{...props, isSubmitted }} />
         </form>
 
       </div>

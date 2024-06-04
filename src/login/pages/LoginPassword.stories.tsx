@@ -17,7 +17,7 @@ export const Default: Story = {
   render: () => <PageStory />
 };
 
-export const WithOutResetPasswordAllowed: Story = {
+export const WithoutResetPasswordAllowed: Story = {
   render: () => (
     <PageStory kcContext={{realm: { resetPasswordAllowed: false }}}/>
   )

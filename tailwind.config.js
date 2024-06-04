@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    "./node_modules/preline/preline.js",
     "./src/**/*.{js,jsx,ts,tsx,ftl}",
   ],
   theme: {
@@ -8,8 +9,9 @@ export default {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
     require('tailwind-scrollbar'),
-    require('daisyui')
+    require('preline/plugin')
   ],
 }
 

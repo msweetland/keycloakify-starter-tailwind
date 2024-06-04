@@ -1,6 +1,6 @@
-import React, {KeyboardEvent, MouseEvent as ReactMouseEvent, useEffect, useRef, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretDown, faCheck} from '@fortawesome/free-solid-svg-icons';
+import React, { KeyboardEvent, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 interface DropdownProps {
   buttonIconLeft?: React.ReactNode;
@@ -31,8 +31,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const toggleDropdown = (e: ReactMouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  const toggleDropdown = (e?: ReactMouseEvent<HTMLButtonElement>) => {
+    e?.stopPropagation();
     setIsOpen(prev => !prev);
   };
 
@@ -70,6 +70,12 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
+  const handleBlur = (event: React.FocusEvent) => {
+    if (!dropdownRef.current?.contains(event.relatedTarget as Node)) {
+      setIsOpen(false);
+    }
+  };
+
   useEffect(() => {
     if (isOpen && itemRefs.current[highlightedIndex]) {
       itemRefs.current[highlightedIndex]?.scrollIntoView({
@@ -79,12 +85,13 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   }, [isOpen, highlightedIndex]);
 
-
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
+      itemRefs.current.forEach(ref => ref?.blur());
+      setHighlightedIndex(items.indexOf(defaultSelectedItem || items[0]));
     }
 
     return () => {
@@ -93,32 +100,34 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, [isOpen]);
 
   return (
-    <div ref={dropdownRef} className={`dropdown ${dropdownClassName}`}>
+    <div ref={dropdownRef} className={`${dropdownClassName}`}>
       <button
         onClick={toggleDropdown}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        className={`btn m-1 flex items-center ${buttonClassName}`}
+        className={`py-2 px-3 flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white hover:bg-gray-100 hover:text-gray-800 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-white/10 dark:hover:text-white ${buttonClassName} focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white`}
         onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
       >
         {buttonIconLeft && <span className="mr-2">{buttonIconLeft}</span>}
         <span>{itemTransformer ? itemTransformer(selectedItem) : selectedItem}</span>
         <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
       </button>
-      <div className={`dropdown-content z-[1] menu mr-1 mt-1 shadow bg-base-100 rounded-box w-52 p-2 max-h-80 ${dropdownBodyClassName} ${isOpen ? "" : "hidden"}`}>
-        <div className="overflow-y-scroll scrollbar scrollbar-track-rounded-full scrollbar-track-base-100 scrollbar-thumb-base-content pr-2">
-          <ul role="menu" aria-label="Dropdown list">
+      <div className={`flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 z-[1] menu mr-1 mt-1 bg-base-100 rounded-box w-52 p-2 max-h-80 ${dropdownBodyClassName} ${isOpen ? "" : "hidden"}`}>
+        <div className="overflow-y-scroll scrollbar scrollbar-track-rounded-full dark:scrollbar-track-neutral-900 dark:scrollbar-thumb-gray-200 pr-2">
+          <ul role="menu" aria-label="Dropdown list" className="flex flex-col space-y-1">
             {items.map((item, index) => (
               <li key={index} role="menuitem">
                 <button
                   ref={el => (itemRefs.current[index] = el)}
                   onClick={e => handleItemClick(item, e)}
                   onMouseMove={() => setHighlightedIndex(index)}
-                  className={`btn btn-ghost w-full text-left flex items-center justify-between hover:bg-transparent ${
-                    highlightedIndex === index ? 'btn-active hover:btn-active' : ''
+                  onFocus={(_) => setHighlightedIndex(index)}
+                  onBlur={handleBlur}
+                  className={`w-full flex justify-between py-2 px-3 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white ${
+                    highlightedIndex === index ? 'bg-gray-100 text-gray-800 hover:bg-gray-100 hover:text-gray-800 dark:bg-white/10 dark:hover:bg-white/10 dark:text-white dark:hover:text-white' : ''
                   } ${itemButtonClassName}`} // Added padding-right
                   onMouseDown={e => e.preventDefault()}
-                  tabIndex={-1}
                 >
                   {itemTransformer ? itemTransformer(item) : item}
                   {selectedItem === item && <FontAwesomeIcon icon={faCheck} className="ml-2" />}
