@@ -39,7 +39,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   return (
     <div className="h-full min-h-screen max-w-lg flex flex-col justify-center mx-auto space-y-4">
 
-      <div className="relative w-full p-4 py-10 flex flex-col space-y-4 bg-white md:border md:shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div className="relative w-full p-5 flex flex-col space-y-4 bg-white md:border md:shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
 
         {/* Locale Dropdown */}
         {realm.internationalizationEnabled && locale && locale?.supported.length > 1 && (
@@ -50,7 +50,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             itemTransformer={(languageTag) => labelBySupportedLanguageTag[languageTag]}
             buttonIconLeft={<FontAwesomeIcon icon={faEarthAmericas}/>}
             buttonClassName="btn-ghost btn-sm"
-            dropdownClassName="absolute top-4 right-4"
+            dropdownClassName="absolute top-2 right-2"
             itemButtonClassName=""
             dropdownBodyClassName="origin-top-right absolute right-0 shadow-lg mt-2"
           />

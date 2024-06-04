@@ -105,7 +105,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         onClick={toggleDropdown}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        className={`py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 ${buttonClassName} focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white`}
+        className={`p-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 ${buttonClassName} focus:outline-none focus:ring-0 focus:bg-gray-100 focus:text-gray-800 dark:focus:bg-white/10 dark:focus:text-white`}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
       >
