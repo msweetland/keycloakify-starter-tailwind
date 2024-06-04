@@ -14,6 +14,7 @@ const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired"));
 const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm"));
 const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail"));
+const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const LoginDeviceVerifyUserCode = lazy(() => import("./pages/LoginDeviceVerifyUserCode"));
 const LogoutConfirm = lazy(() => import("./pages/LogoutConfirm"));
 const Error = lazy(() => import("./pages/Error"));
@@ -50,6 +51,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <LoginIdpLinkConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "login-idp-link-email.ftl":
             return <LoginIdpLinkEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+          case "login-verify-email.ftl":
+            return <LoginVerifyEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "login-oauth2-device-verify-user-code.ftl":
             return <LoginDeviceVerifyUserCode {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "logout-confirm.ftl":
