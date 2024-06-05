@@ -8,6 +8,7 @@ import {isLoginContext, isLoginResetPasswordContext} from "../utils/ContextGuard
 
 type KcContextSupportedPages = Extract<KcContext, { pageId:
   "login.ftl" |
+  "login-username.ftl" |
   "login-reset-password.ftl" }>
 
 interface UsernameInputProps extends PageProps<KcContextSupportedPages, I18n> {

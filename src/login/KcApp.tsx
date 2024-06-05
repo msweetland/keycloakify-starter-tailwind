@@ -9,6 +9,7 @@ import {HSStaticMethods} from "preline";
 HSStaticMethods.autoInit();
 
 const Login = lazy(() => import("./pages/Login"));
+const LoginUsername = lazy(() => import("./pages/LoginUsername"));
 const LoginPassword = lazy(() => import("./pages/LoginPassword"));
 const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired"));
@@ -47,6 +48,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <Info {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login.ftl":
             return <Login {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
+          case "login-username.ftl":
+            return <LoginUsername {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "login-password.ftl":
             return <LoginPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "login-reset-password.ftl":
