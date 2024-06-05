@@ -8,7 +8,12 @@ export default function LoginDeviceVerifyUserCode(props: PageProps<Extract<KcCon
   const { msgStr } = i18n;
 
   return (
-    <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={msgStr("oauth2DeviceVerificationTitle")}>
+    <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={<></>}>
+
+      <div className="prose dark:prose-invert text-center pb-4">
+        <h1>{msgStr("oauth2DeviceVerificationTitle")}</h1>
+      </div>
+
       <form
         action={url.oauth2DeviceVerificationAction}
         method="post"

@@ -28,6 +28,11 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
       {...{kcContext, i18n, doUseDefaultCss, classes}}
       headerNode={<></>}
     >
+
+      <div className="prose dark:prose-invert text-center pb-4">
+        <h1>{msgStr("doLogIn")}</h1>
+      </div>
+      
       <div className="flex flex-col space-y-4">
 
         {/* Password Login */}

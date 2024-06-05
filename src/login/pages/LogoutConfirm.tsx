@@ -11,30 +11,32 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
 
   return (
     <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msgStr("logoutConfirmTitle")}>
-        <form className="flex flex-col space-y-4" action={url.logoutConfirmAction} method="POST">
 
-          <div className="prose dark:prose-invert text-center">
-            <h3>{msgStr("logoutConfirmHeader")}</h3>
-          </div>
+      <div className="prose dark:prose-invert text-center">
+        <h1>{msgStr("logoutConfirmTitle")}</h1>
+        <p className="prose-gray">{msgStr("logoutConfirmHeader")}</p>
+      </div>
 
-          <input type="hidden" name="session_code" value={logoutConfirm.code} />
+      <form className="flex flex-col space-y-4" action={url.logoutConfirmAction} method="POST">
 
-          <input
-            className="cursor-pointer w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-            name="confirmLogout"
-            id="kc-logout"
-            type="submit"
-            value={msgStr("doLogout")}
-          />
+        <input type="hidden" name="session_code" value={logoutConfirm.code} />
 
-          {!logoutConfirm.skipLink && client.baseUrl && (
-            <a className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700" href={client.baseUrl}>
-              <FontAwesomeIcon icon={faCaretLeft}/>
-              {msgStr("backToApplication").replace("&laquo; ", "")}
-            </a>
-          )}
+        <input
+          className="cursor-pointer w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+          name="confirmLogout"
+          id="kc-logout"
+          type="submit"
+          value={msgStr("doLogout")}
+        />
 
-        </form>
+        {!logoutConfirm.skipLink && client.baseUrl && (
+          <a className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700" href={client.baseUrl}>
+            <FontAwesomeIcon icon={faCaretLeft}/>
+            {msgStr("backToApplication").replace("&laquo; ", "")}
+          </a>
+        )}
+
+      </form>
     </Template>
   );
 }

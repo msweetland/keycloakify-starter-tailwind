@@ -9,6 +9,7 @@ import SubmitButton from "../components/SubmitButton.tsx";
 export default function LoginPassword(props: PageProps<Extract<KcContext, { pageId: "login-password.ftl" }>, I18n>) {
   const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
   const { url, } = kcContext;
+  const { msgStr } = i18n;
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -23,20 +24,21 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
       {...{ kcContext, i18n, doUseDefaultCss, classes }}
       headerNode={<></>}
     >
-      <div className="w-full max-w-md mx-auto space-y-4">
-
-        {/* Password Login */}
-        <form
-          className="space-y-4"
-          action={url.loginAction}
-          method="post"
-          onSubmit={onSubmit}
-        >
-          <PasswordInput {...{...props, isSubmitted}}/>
-          <SubmitButton {...{...props, isSubmitted }} />
-        </form>
-
+      <div className="prose dark:prose-invert text-center pb-4">
+        <h1>{msgStr("doLogIn")}</h1>
       </div>
+
+      {/* Password Login */}
+      <form
+        className="flex flex-col space-y-4"
+        action={url.loginAction}
+        method="post"
+        onSubmit={onSubmit}
+      >
+        <PasswordInput {...{...props, isSubmitted}}/>
+        <SubmitButton {...{...props, isSubmitted }} />
+      </form>
+
     </Template>
   );
 }

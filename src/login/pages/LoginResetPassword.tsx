@@ -29,9 +29,11 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
       <div className="w-full max-w-md mx-auto space-y-4">
 
         {/* Header */}
-        <div className="prose dark:prose-invert">
-          <h2 className="mb-2">{msgStr("emailForgotTitle")}</h2>
-          <p>{getUsernameLabel(kcContext) == "email" ? msgStr("emailInstruction") : msgStr("emailInstructionUsername")}</p>
+        <div className="prose dark:prose-invert pb-4">
+          <h1 className="text-center">
+            {msgStr("emailForgotTitle")}
+          </h1>
+          <p className="prose-gray px-4">{getUsernameLabel(kcContext) == "email" ? msgStr("emailInstruction") : msgStr("emailInstructionUsername")}</p>
         </div>
 
         {/* Password Reset */}
@@ -43,7 +45,6 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
         >
           <UsernameInput {...{...props, isSubmitted }}/>
           <SubmitButton {...{...props, isSubmitted }} />
-
         </form>
 
         {/* Back to Login */}

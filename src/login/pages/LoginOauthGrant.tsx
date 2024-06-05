@@ -15,9 +15,15 @@ export default function LoginOauthGrant(props: PageProps<Extract<KcContext, {
       {...{kcContext, i18n, doUseDefaultCss, classes}}
       headerNode={<></>}
     >
+
+      <div className="prose dark:prose-invert pb-4">
+        <h1 className="text-center">
+          {msgStr("oauthGrantTitle", client.name ? advancedMsgStr(client.name) : client.clientId)}
+        </h1>
+      </div>
+
       <form action={url.oauthAction} method="POST" className="flex flex-col space-y-4 prose dark:prose-invert">
-        <h2
-          className="text-center">{msgStr("oauthGrantTitle", client.name ? advancedMsgStr(client.name) : client.clientId)}</h2>
+
         <div
           className="bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 flex flex-col"
           role="alert">

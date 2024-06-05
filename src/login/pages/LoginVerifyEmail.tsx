@@ -10,27 +10,26 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
   const { url, user } = kcContext;
 
   return (
-    <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msgStr("emailVerifyTitle")}>
+    <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={<></>}>
 
-      <div className="flex flex-col space-y-4">
+      <div className="prose dark:prose-invert pb-4">
+        <h1 className="text-center">
+          {msgStr("emailVerifyTitle")}
+        </h1>
+        <p className="prose-gray px-4">{msgStr("emailVerifyInstruction1", user?.email ?? "")}</p>
+      </div>
 
-        <div className="prose dark:prose-invert px-2">
-          <h3>{msgStr("emailVerifyInstruction1", user?.email ?? "")}</h3>
+      <div className="bg-yellow-100 border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4 dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500" role="alert">
+        <div className="flex flex-col space-y-2">
+          <span className="text-sm font-bold">{msgStr("emailVerifyInstruction2")}</span>
+          <a
+            className="font-medium text-yellow-500 hover:underline decoration-yellow-500 hover:opacity-80 flex items-center"
+            href={url.loginAction}
+          >
+            {`${msgStr("doClickHere")} ${msgStr("emailVerifyInstruction3")}`}
+            <FontAwesomeIcon icon={faCaretRight} className="ml-1"/>
+          </a>
         </div>
-
-        <div className="bg-yellow-100 border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4 dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500" role="alert">
-          <div className="flex flex-col space-y-2">
-            <span className="text-sm">{msgStr("emailVerifyInstruction2")}</span>
-            <a
-              className="font-medium text-yellow-500 hover:underline decoration-yellow-500 hover:opacity-80 flex items-center"
-              href={url.loginAction}
-            >
-              {`${msgStr("doClickHere")} ${msgStr("emailVerifyInstruction3")}`}
-              <FontAwesomeIcon icon={faCaretRight} className="ml-1"/>
-            </a>
-          </div>
-        </div>
-
       </div>
     </Template>
   );

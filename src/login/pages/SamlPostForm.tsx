@@ -27,9 +27,9 @@ export default function SamlPostForm(props: PageProps<Extract<KcContext, { pageI
 
   return (
     <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={<></>}>
-      <div className="prose dark:prose-invert">
-        <h2 className="text-center">{msgStr("saml.post-form.title")}</h2>
-        <h4 className="text-center">{msgStr("saml.post-form.message")}</h4>
+      <div className="prose dark:prose-invert text-center">
+        <h2>{msgStr("saml.post-form.title")}</h2>
+        <p className="prose-gray">{msgStr("saml.post-form.message")}</p>
       </div>
 
       <form name="saml-post-binding" method="post" action={samlPost.url} ref={setHtmlFormElement} className="flex flex-col space-y-4">
