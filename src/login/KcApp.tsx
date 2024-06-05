@@ -22,6 +22,7 @@ const Error = lazy(() => import("./pages/Error"));
 const Info = lazy(() => import("./pages/Info"));
 const SamlPostForm = lazy(() => import("./pages/SamlPostForm"));
 const SelectAuthenticator = lazy(() => import("./pages/SelectAuthenticator"));
+const UpdateEmail = lazy(() => import("./pages/UpdateEmail"));
 // If you can, favor register-user-profile.ftl over register.ftl, see: https://docs.keycloakify.dev/realtime-input-validation
 const Register = lazy(() => import("./pages/Register"));
 const RegisterUserProfile = lazy(() => import("./pages/RegisterUserProfile"));
@@ -71,6 +72,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <RegisterUserProfile {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "select-authenticator.ftl":
             return <SelectAuthenticator {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+          case "update-email.ftl":
+            return <UpdateEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "terms.ftl":
             return <Terms {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           // Removes those pages in you project. They are included to show you how to implement keycloak pages
