@@ -12,6 +12,7 @@ const Login = lazy(() => import("./pages/Login"));
 const LoginUsername = lazy(() => import("./pages/LoginUsername"));
 const LoginPassword = lazy(() => import("./pages/LoginPassword"));
 const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
+const LoginUpdatePassword = lazy(() => import("./pages/LoginUpdatePassword"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired"));
 const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm"));
 const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail"));
@@ -56,6 +57,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <LoginPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login-reset-password.ftl":
             return <LoginResetPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
+          case "login-update-password.ftl":
+            return <LoginUpdatePassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login-page-expired.ftl":
             return <LoginPageExpired {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-idp-link-confirm.ftl":

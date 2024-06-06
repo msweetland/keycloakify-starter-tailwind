@@ -5,7 +5,7 @@ import type { I18n } from "../i18n";
 import {
   isLoginContext, isLoginOtpContext,
   isLoginPasswordContext,
-  isLoginResetPasswordContext,
+  isLoginResetPasswordContext, isLoginUpdatePasswordContext,
   isLoginUsernameContext
 } from "../utils/ContextGuards.ts";
 
@@ -14,7 +14,8 @@ interface SubmitButtonProps extends PageProps<Extract<KcContext, { pageId:
     "login-reset-password.ftl" |
     "login-password.ftl" |
     "login-username.ftl" |
-    "login-otp.ftl"
+    "login-otp.ftl" |
+    "login-update-password.ftl"
 }>, I18n> {
   isSubmitted: boolean;
 }
@@ -31,6 +32,7 @@ const SubmitButton: FC<SubmitButtonProps> = ({ kcContext, i18n, isSubmitted }) =
       message = msgStr("doLogIn");
       break;
     case isLoginResetPasswordContext(kcContext):
+    case isLoginUpdatePasswordContext(kcContext):
       message = msgStr("doSubmit");
       break;
   }

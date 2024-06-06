@@ -1,4 +1,5 @@
 import {KcContext} from "../kcContext.ts";
+import LoginUpdatePassword from "../pages/LoginUpdatePassword.tsx";
 
 export function isLoginContext(kcContext: KcContext): kcContext is Extract<KcContext, { pageId: "login.ftl" }> {
   return kcContext.pageId === "login.ftl";
@@ -18,4 +19,8 @@ export function isLoginOtpContext(kcContext: KcContext): kcContext is Extract<Kc
 
 export function isLoginResetPasswordContext(kcContext: KcContext): kcContext is Extract<KcContext, { pageId: "login-reset-password.ftl" }> {
   return kcContext.pageId === "login-reset-password.ftl";
+}
+
+export function isLoginUpdatePasswordContext(kcContext: KcContext): kcContext is Extract<KcContext, { pageId: "login-reset-password.ftl" }> {
+  return kcContext.pageId === "login-update-password.ftl";
 }
