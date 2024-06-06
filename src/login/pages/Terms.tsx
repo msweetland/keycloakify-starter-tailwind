@@ -8,7 +8,7 @@ import {useDownloadTerms} from "keycloakify/login";
 
 export default function Terms(props: PageProps<Extract<KcContext, { pageId: "terms.ftl" }>, I18n>) {
   const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
-  const {msg, msgStr} = i18n;
+  const {msgStr} = i18n;
 
   // NOTE: If you aren't going to customize the layout of the page you can move this hook to
   // KcApp.tsx, see: https://docs.keycloakify.dev/terms-and-conditions
@@ -40,7 +40,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
   }
 
   return (
-    <Template {...{kcContext, i18n, doUseDefaultCss, classes}} displayMessage={false} headerNode={msg("termsTitle")}>
+    <Template {...{kcContext, i18n, doUseDefaultCss, classes}} displayMessage={false} headerNode={<></>}>
       <div className="prose dark:prose-invert max-w-none">
         <Markdown>{termMarkdown}</Markdown>
       </div>
