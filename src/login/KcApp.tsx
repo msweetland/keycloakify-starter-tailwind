@@ -19,6 +19,7 @@ const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const LoginDeviceVerifyUserCode = lazy(() => import("./pages/LoginDeviceVerifyUserCode"));
 const LogoutConfirm = lazy(() => import("./pages/LogoutConfirm"));
 const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant"));
+const LoginConfigTotp = lazy(() => import("./pages/LoginConfigTotp"));
 const Error = lazy(() => import("./pages/Error"));
 const Info = lazy(() => import("./pages/Info"));
 const SamlPostForm = lazy(() => import("./pages/SamlPostForm"));
@@ -68,6 +69,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             return <LogoutConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "login-oauth-grant.ftl":
             return <LoginOauthGrant {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+          case "login-config-totp.ftl":
+            return <LoginConfigTotp {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
           case "saml-post-form.ftl":
             return <SamlPostForm {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
           case "register.ftl":

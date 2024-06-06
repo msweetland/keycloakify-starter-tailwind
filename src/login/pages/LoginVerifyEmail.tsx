@@ -23,11 +23,11 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
         <div className="flex flex-col space-y-2">
           <span className="text-sm font-bold">{msgStr("emailVerifyInstruction2")}</span>
           <a
-            className="font-medium text-yellow-500 hover:underline decoration-yellow-500 hover:opacity-80 flex items-center"
+            className="not-prose gap-x-1 text-sm decoration-2 font-medium text-yellow-500 hover:underline decoration-yellow-500 hover:opacity-80 flex items-center"
             href={url.loginAction}
           >
             {`${msgStr("doClickHere")} ${msgStr("emailVerifyInstruction3")}`}
-            <FontAwesomeIcon icon={faCaretRight} className="ml-1"/>
+            <FontAwesomeIcon icon={faCaretRight} className="flex-shrink-0 size-4" />
           </a>
         </div>
       </div>
