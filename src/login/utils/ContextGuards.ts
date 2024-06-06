@@ -12,6 +12,10 @@ export function isLoginPasswordContext(kcContext: KcContext): kcContext is Extra
   return kcContext.pageId === "login-password.ftl";
 }
 
+export function isLoginOtpContext(kcContext: KcContext): kcContext is Extract<KcContext, { pageId: "login-otp.ftl" }> {
+  return kcContext.pageId === "login-otp.ftl";
+}
+
 export function isLoginResetPasswordContext(kcContext: KcContext): kcContext is Extract<KcContext, { pageId: "login-reset-password.ftl" }> {
   return kcContext.pageId === "login-reset-password.ftl";
 }

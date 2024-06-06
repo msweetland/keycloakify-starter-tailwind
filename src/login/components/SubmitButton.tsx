@@ -3,7 +3,7 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import {
-  isLoginContext,
+  isLoginContext, isLoginOtpContext,
   isLoginPasswordContext,
   isLoginResetPasswordContext,
   isLoginUsernameContext
@@ -13,7 +13,8 @@ interface SubmitButtonProps extends PageProps<Extract<KcContext, { pageId:
     "login.ftl" |
     "login-reset-password.ftl" |
     "login-password.ftl" |
-    "login-username.ftl"
+    "login-username.ftl" |
+    "login-otp.ftl"
 }>, I18n> {
   isSubmitted: boolean;
 }
@@ -26,6 +27,7 @@ const SubmitButton: FC<SubmitButtonProps> = ({ kcContext, i18n, isSubmitted }) =
     case isLoginContext(kcContext):
     case isLoginUsernameContext(kcContext):
     case isLoginPasswordContext(kcContext):
+    case isLoginOtpContext(kcContext):
       message = msgStr("doLogIn");
       break;
     case isLoginResetPasswordContext(kcContext):

@@ -17,6 +17,7 @@ const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm"));
 const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail"));
 const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const LoginDeviceVerifyUserCode = lazy(() => import("./pages/LoginDeviceVerifyUserCode"));
+const LoginOtp = lazy(() => import("./pages/LoginOtp"));
 const LogoutConfirm = lazy(() => import("./pages/LogoutConfirm"));
 const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant"));
 const LoginConfigTotp = lazy(() => import("./pages/LoginConfigTotp"));
@@ -50,39 +51,41 @@ export default function KcApp(props: { kcContext: KcContext; }) {
           case "login.ftl":
             return <Login {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login-username.ftl":
-            return <LoginUsername {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <LoginUsername {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login-password.ftl":
-            return <LoginPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <LoginPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login-reset-password.ftl":
-            return <LoginResetPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <LoginResetPassword {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "login-page-expired.ftl":
-            return <LoginPageExpired {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginPageExpired {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-idp-link-confirm.ftl":
-            return <LoginIdpLinkConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginIdpLinkConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-idp-link-email.ftl":
-            return <LoginIdpLinkEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginIdpLinkEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-verify-email.ftl":
-            return <LoginVerifyEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginVerifyEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-oauth2-device-verify-user-code.ftl":
-            return <LoginDeviceVerifyUserCode {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginDeviceVerifyUserCode {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
+          case "login-otp.ftl":
+            return <LoginOtp {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "logout-confirm.ftl":
-            return <LogoutConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LogoutConfirm {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-oauth-grant.ftl":
-            return <LoginOauthGrant {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginOauthGrant {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "login-config-totp.ftl":
-            return <LoginConfigTotp {...{kcContext, i18n, Template}} doUseDefaultCss={false} />
+            return <LoginConfigTotp {...{kcContext, i18n, Template}} doUseDefaultCss={false} />;
           case "saml-post-form.ftl":
-            return <SamlPostForm {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <SamlPostForm {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "register.ftl":
             return <Register {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "register-user-profile.ftl":
-            return <RegisterUserProfile {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <RegisterUserProfile {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "select-authenticator.ftl":
-            return <SelectAuthenticator {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <SelectAuthenticator {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "update-email.ftl":
-            return <UpdateEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <UpdateEmail {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "webauthn-authenticate.ftl":
-            return <WebauthnAuthenticate {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>
+            return <WebauthnAuthenticate {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           case "terms.ftl":
             return <Terms {...{kcContext, i18n, Template}} doUseDefaultCss={false}/>;
           // Removes those pages in you project. They are included to show you how to implement keycloak pages

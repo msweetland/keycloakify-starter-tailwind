@@ -31,7 +31,7 @@ const UsernameInput: FC<UsernameInputProps> = ({
                                                  isSubmitted,
                                                }) => {
   const { realm } = kcContext;
-  const { msg } = i18n;
+  const { msgStr } = i18n;
 
   const getUsernameLabel = () => {
     if (!realm.loginWithEmailAllowed) {
@@ -67,7 +67,7 @@ const UsernameInput: FC<UsernameInputProps> = ({
         htmlFor="username"
         className="block text-sm font-medium mb-2 dark:text-white"
       >
-        {msg(getUsernameLabel())}
+        {msgStr(getUsernameLabel())}
       </label>
       <div className="w-full relative">
         <input
